@@ -96,25 +96,28 @@ public class yabelBehavior : MonoBehaviour
         Collider2D[] rangeCheck = Physics2D.OverlapCircleAll(transform.position, FieldOfViewRadius, FoodLayer);
 
         //if food has been found
-        if(rangeCheck.Length > 0)
+        if (rangeCheck.Length > 0)
         {
             //get the component transform from food and get the directionOfFood in a Vector2
             transformFood = rangeCheck[0].transform;
             Vector2 directionOfFood = (transformFood.position - transform.position).normalized;
+            Debug.Log(transformFood);
 
             //check if target is in the FOV angle
             if(Vector2.Angle(transform.up, directionOfFood) < FieldOfViewAngle/2)
             {
-                float distanceToTarget = Vector2.Distance(transform.position, transformFood.position);
+                float distanceToFood = Vector2.Distance(transform.position, transformFood.position);
+                RaycastHit2D vision = Physics2D.Raycast(transform.forward, directionOfFood, distanceToFood, FoodLayer);
 
                 //check from objects position to the direction of food within the distanceToTarget
-                if (Physics2D.Raycast(transform.position, directionOfFood, distanceToTarget))
+                if (vision.collider != null)  //theoreticly can be removed
                 {
                     CanSeeFood = true;
+                    Debug.Log("hit");
                 }
                 else
                 {
-                    CanSeeFood = false; //theoreticly can be removed
+                    CanSeeFood = false;
                 }
             }
             else
@@ -178,7 +181,10 @@ public class yabelBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement();
         energyMonitor();
+        if (CanSeeFood ==  false )
+        {
+            movement();
+        }
     }
 }
