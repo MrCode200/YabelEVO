@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class yabelBehavior : MonoBehaviour
 {
     #region Variables
@@ -72,24 +73,17 @@ public class yabelBehavior : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    //check for collision
     void OnCollisionEnter2D(Collision2D collisionInfo)
     {
         if (collisionInfo.gameObject.tag == "Food")
         {
-            if (collisionInfo.gameObject.GetComponent<HandleFoodEnergy>().energy>0)
+            if (collisionInfo.gameObject.GetComponent<HandleFoodEnergy>().energy > 0)
             {
                 energy += foodConsumptionRate;
                 collisionInfo.gameObject.GetComponent<HandleFoodEnergy>().energy -= foodConsumptionRate;
             }
-            else
-            {
-                Destroy(collisionInfo.gameObject);
-            }            
         }
     }
-
     private void FOV()
     {
         //get all food collided in a circle around the yabel 
@@ -100,32 +94,21 @@ public class yabelBehavior : MonoBehaviour
         {
             //get the component transform from food and get the directionOfFood in a Vector2
             transformFood = rangeCheck[0].transform;
-            Vector2 directionOfFood = (transformFood.position - transform.position).normalized;
-            Debug.Log(transformFood);
+            Vector3 directionOfFood = (transformFood.position - transform.position);
+            Debug.Log("hit");
 
             //check if target is in the FOV angle
-            if(Vector2.Angle(transform.up, directionOfFood) < FieldOfViewAngle/2)
+            if (Vector2.Dot(transform.up, directionOfFood.normalized) > 0)
             {
-                float distanceToFood = Vector2.Distance(transform.position, transformFood.position);
-                RaycastHit2D vision = Physics2D.Raycast(transform.forward, directionOfFood, distanceToFood, FoodLayer);
-
-                //check from objects position to the direction of food within the distanceToTarget
-                if (vision.collider != null)  //theoreticly can be removed
-                {
-                    CanSeeFood = true;
-                    Debug.Log("hit");
-                }
-                else
-                {
-                    CanSeeFood = false;
-                }
+                CanSeeFood = true;
+                Debug.Log("hit");
             }
             else
             {
                 CanSeeFood = false;
             }
         }
-        else if(CanSeeFood)
+        else if (CanSeeFood)
         {
             CanSeeFood = false;
         }
@@ -137,14 +120,14 @@ public class yabelBehavior : MonoBehaviour
         Gizmos.color = Color.white;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.forward, FieldOfViewRadius);
 
-        Vector3 angleNeg = DirectionFromAngle(-transform.eulerAngles.z, -FieldOfViewAngle / 2);
-        Vector3 anglePos = DirectionFromAngle(transform.eulerAngles.z, FieldOfViewAngle / 2);
+        Vector3 angle01 = DirectionFromAngle(-transform.eulerAngles.z, -FieldOfViewAngle / 2);
+        Vector3 angle02 = DirectionFromAngle(-transform.eulerAngles.z, FieldOfViewAngle / 2);
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, transform.position + angleNeg * FieldOfViewRadius);
-        Gizmos.DrawLine(transform.position, transform.position + anglePos * FieldOfViewRadius);
+        Gizmos.DrawLine(transform.position, transform.position + angle01 * FieldOfViewRadius);
+        Gizmos.DrawLine(transform.position, transform.position + angle02 * FieldOfViewRadius);
 
-        if(CanSeeFood)
+        if (CanSeeFood)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, transformFood.position);
