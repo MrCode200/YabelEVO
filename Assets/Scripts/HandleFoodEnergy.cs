@@ -22,7 +22,7 @@ public class HandleFoodEnergy : MonoBehaviour
     void Update()
     {
         transform.localScale = new Vector3(energy / 6, energy / 6, 0);
-        if (energy < 0)
+        if (energy <= 0)
         {
             Destroy(gameObject);
         }

@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3909419798594757770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3909419798594757780}
+  - component: {fileID: 3909419798594757782}
+  - component: {fileID: 3909419798594757783}
+  - component: {fileID: 3909419798594757777}
+  m_Layer: 0
+  m_Name: SimulationEngine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3909419798594757780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909419798594757770}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3909419798594757782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909419798594757770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11589066506e0ba4190e35651bb11580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3909419798594757783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909419798594757770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4da30758dd1cb440be8146c9dd0c52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CycleControll: {fileID: 3909419798594757777}
+  yabelPrefab: {fileID: 1575845093890665202, guid: bd9356014dedede4d88ff5dad7a9dcff, type: 3}
+  numOfYabels: 0
+  foodPrefab: {fileID: 5837854832058640907, guid: 418e52be4c758974d8d5ec18da102127, type: 3}
+  numOfFood: 0
+  FoodPerCycle: 0
+  spawnRadius: 25
+  spawnPoint: 0
+--- !u!114 &3909419798594757777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909419798594757770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44447c6c06766a04e80944c22bb6754c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cycle: 0
+  CycleInSeconds: 60

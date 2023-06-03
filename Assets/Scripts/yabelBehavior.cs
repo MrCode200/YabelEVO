@@ -7,8 +7,16 @@ public class yabelBehavior : MonoBehaviour
 {
     #region Variables
 
-    public float moveSpeed = 4f;
-    [Range(1,360)]public float rotationSpeed = 45f;
+    public GameObject YabelEgg;
+    private GameObject currentEgg;
+    //maybe later make private
+    //at which energy egg is layed
+    public int energyCapEgg;
+    //how much energy it loses
+    public int energyUsageForEgg;
+
+    public float moveSpeed;
+    [Range(1,360)]public float rotationSpeed;
 
     //randomIntFrequenzy is how many Frames it takes to change movement state
     public int randomIntFrequenzy = 60;
@@ -16,19 +24,23 @@ public class yabelBehavior : MonoBehaviour
     public int forwardFrequenzy = 2;
     //used to check(count) at which frame the programm is
     private int rotationElapsed = 0;
-    int randomIntMovement = 5;
+    int randomIntMovement;
 
-    public float energy = 100f;
-    public float energyConsumptionRate = 0.1f; //can be deleted probably
-    public float foodConsumptionRate = 20f;
+    public float energy = 200f;
+    public float energyConsumptionRate = 0.01f; //can be deleted probably
+    public float foodConsumptionRate;
 
     public LayerMask FoodLayer;
-    public float FieldOfViewRadius = 10; //change name to ...length or ...visionlength etc.
-    [Range(1, 360)]public float FieldOfViewAngle = 45;
+    public float FieldOfViewRadius; //change name to ...length or ...visionlength etc.
+    [Range(1, 360)]public float FieldOfViewAngle;
 
-    private Transform transformFood;
+
+
+    private Vector3 positionFood;
+    private float AngleToFood;
 
     public bool CanSeeFood { get; private set; }
+    public bool CollidedFood { get; private set; }
 
 
     #endregion
@@ -41,39 +53,79 @@ public class yabelBehavior : MonoBehaviour
         // movement forward
         transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
 
+
         //create randomMovement Number afte rotationFrequenzy frames
-        if (rotationElapsed == randomIntFrequenzy)
+        if (!CanSeeFood)
         {
-            randomIntMovement = Random.Range(0, 1 + forwardFrequenzy);
-            rotationElapsed = 0;
+            if (rotationElapsed == randomIntFrequenzy)
+            {
+                randomIntMovement = Random.Range(0, 3 + forwardFrequenzy);
+                rotationElapsed = 0;
+            }
+            else
+            {
+                rotationElapsed = rotationElapsed + 1;
+            }
+
+            //depending on randomMovement rotate and set rotationElapsed = 0
+            if (randomIntMovement == 0)
+            {
+                // Rotate to the right
+                transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+            }
+            else if (randomIntMovement == 1)
+            {
+                // Rotate to the left
+                transform.Rotate(Vector3.forward * -rotationSpeed * Time.deltaTime);
+            }
         }
         else
         {
-            rotationElapsed = rotationElapsed + 1;
+            //check if it has rotated towards food
+            if (transform.rotation.z != Mathf.Round(90 - AngleToFood))
+            {
+                //if food is to the right rotate right else left
+                if (transform.rotation.z == Mathf.Round(90 - AngleToFood) +- 10)
+                {
+                    transform.Rotate(0, 0, AngleToFood);
+                }
+                else if (AngleToFood < 90) 
+                {
+                    transform.Rotate(Vector3.forward * -rotationSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+                }
+            }
         }
 
-        //depending on randomMovement rotate and set rotationElapsed = 0
-        if (randomIntMovement == 0)
-        {
-            // Rotate to the right
-            transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
-        }
-        else if (randomIntMovement == 1)
-        {
-            // Rotate to the left
-            transform.Rotate(Vector3.forward * -rotationSpeed * Time.deltaTime);
-        }
     }
     //function for energy consumption
     private void energyMonitor() //rename to energyController or maybe sth else 
     {
-        energy = energy - energyConsumptionRate * Mathf.RoundToInt(moveSpeed);
+        //use energy per frame
+        energy = energy - Time.timeScale * energyConsumptionRate * 
+            (Mathf.RoundToInt(moveSpeed) + rotationSpeed / 10 + foodConsumptionRate / 2 + FieldOfViewRadius/25 * FieldOfViewAngle/75);
+
         if (energy <= 0)
         {
             Destroy(gameObject);
         }
+        //check if enough energy for egg
+        else if(energy >= energyCapEgg)
+        {
+            currentEgg = Instantiate(YabelEgg, transform.position, Quaternion.Euler(0, 0, 0));
+            currentEgg.GetComponent<EggBehavior>().moveSpeed = moveSpeed;
+            currentEgg.GetComponent<EggBehavior>().foodConsumptionRate = foodConsumptionRate;
+            currentEgg.GetComponent<EggBehavior>().rotationSpeed = rotationSpeed;
+            currentEgg.GetComponent<EggBehavior>().FieldOfViewRadius = FieldOfViewRadius;
+            currentEgg.GetComponent<EggBehavior>().FieldOfViewAngle = FieldOfViewAngle;
+
+            energy -= energyUsageForEgg;
+        }
     }
-    void OnCollisionEnter2D(Collision2D collisionInfo)
+    void OnCollisionStay2D(Collision2D collisionInfo)
     {
         if (collisionInfo.gameObject.tag == "Food")
         {
@@ -84,31 +136,38 @@ public class yabelBehavior : MonoBehaviour
             }
         }
     }
+
+
+    #region FOV
     private void FOV()
     {
         //get all food collided in a circle around the yabel 
         Collider2D[] rangeCheck = Physics2D.OverlapCircleAll(transform.position, FieldOfViewRadius, FoodLayer);
 
-        //if food has been found
         if (rangeCheck.Length > 0)
         {
-            //get the component transform from food and get the directionOfFood in a Vector2
-            transformFood = rangeCheck[0].transform;
-            Vector3 directionOfFood = (transformFood.position - transform.position);
-            Debug.Log("hit");
 
-            //check if target is in the FOV angle
-            if (Vector2.Dot(transform.up, directionOfFood.normalized) > 0)
+            //get distance to food and normalize it
+            if (!CanSeeFood)
+            {
+                positionFood = rangeCheck[0].transform.position;
+            }
+            Vector3 directionToFood = transform.InverseTransformPoint(positionFood);
+
+            //check where food is 
+            AngleToFood = Mathf.Atan2(directionToFood.y, directionToFood.x) * Mathf.Rad2Deg;
+
+            //check if food is in FOV
+            if (AngleToFood >= 90 - FieldOfViewAngle / 2 && AngleToFood <= 90 + FieldOfViewAngle / 2)
             {
                 CanSeeFood = true;
-                Debug.Log("hit");
             }
             else
             {
                 CanSeeFood = false;
             }
         }
-        else if (CanSeeFood)
+        else
         {
             CanSeeFood = false;
         }
@@ -130,7 +189,7 @@ public class yabelBehavior : MonoBehaviour
         if (CanSeeFood)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transformFood.position);
+            Gizmos.DrawLine(transform.position, positionFood);
         }
     }
 
@@ -142,32 +201,19 @@ public class yabelBehavior : MonoBehaviour
         return new Vector2(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
-    private IEnumerator FOVcheck()
-    {
-        //run FOV check every 0.1second
-        WaitForSeconds wait = new WaitForSeconds(0.1f);
-
-        while (true)
-        {
-            yield return wait;
-            FOV();
-        }
-    }
-
+    #endregion
     #endregion
 
     void Start()
     {
-        StartCoroutine(FOVcheck());
+        randomIntMovement = Random.Range(0, 1 + forwardFrequenzy);
     }
 
     // Update is called once per frame
     void Update()
     {
         energyMonitor();
-        if (CanSeeFood ==  false )
-        {
-            movement();
-        }
+        FOV();
+        movement();
     }
 }
