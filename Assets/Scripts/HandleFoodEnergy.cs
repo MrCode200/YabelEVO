@@ -21,7 +21,7 @@ public class HandleFoodEnergy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localScale = new Vector3(energy / 6, energy / 6, 0);
+        transform.localScale = new Vector3(energy / 10 + 10, energy / 10 + 10, 0);
         if (energy <= 0)
         {
             Destroy(gameObject);

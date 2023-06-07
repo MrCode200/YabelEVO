@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1575845093890665202
+--- !u!1 &67692270737459752
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1575845093890665205}
-  - component: {fileID: 1575845093890665206}
-  - component: {fileID: 1575845093890665207}
-  - component: {fileID: 1575845093890665200}
-  - component: {fileID: 1575845093890665201}
-  - component: {fileID: -8443488309103390876}
+  - component: {fileID: 5285949828312552559}
+  - component: {fileID: 1706466259671840718}
+  - component: {fileID: 5413025955965433605}
+  - component: {fileID: -5370049348190317930}
   m_Layer: 0
-  m_Name: Yabel
-  m_TagString: Yabel
+  m_Name: Barrier
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1575845093890665205
+--- !u!4 &5285949828312552559
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575845093890665202}
+  m_GameObject: {fileID: 67692270737459752}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 0}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 10, y: 10, z: 0}
+  m_LocalScale: {x: 90, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1575845093890665206
+--- !u!212 &1706466259671840718
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575845093890665202}
+  m_GameObject: {fileID: 67692270737459752}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -56,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4bacc5e4cf988e04ba9db0eb055cb740, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,64 +75,25 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a64b49dd0b7d1654c924b79f20827bcd, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.34, y: 0.34}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1575845093890665207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575845093890665202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1d82f2adeb8164ca286c72bde409d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  YabelEgg: {fileID: 3221585837991151636, guid: 458c137776e99474c89c8eeebd5e9793, type: 3}
-  energyCapEgg: 400
-  energyUsageForEgg: 250
-  rg: {fileID: 1575845093890665200}
-  throwBack: 10
-  maxLife: 100
-  life: 0
-  regeneration: 0.1
-  damage: 5
-  moveSpeed: 4
-  rotationSpeed: 180
-  randomIntFrequenzy: 30
-  forwardFrequenzy: 2
-  age: 0
-  agingSpeed: 2
-  growSpeed: 0.01
-  time: 0
-  meat: {fileID: 425039537917041362, guid: 4cebad35a042f514a89ee2baf1b5e97f, type: 3}
-  meatChunks: 0
-  energy: 200
-  energyConsumptionRate: 0.02
-  foodConsumptionRate: 20
-  FoodLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  FieldOfViewRadius: 10
-  FieldOfViewAngle: 81
---- !u!50 &1575845093890665200
+--- !u!50 &5413025955965433605
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575845093890665202}
+  m_GameObject: {fileID: 67692270737459752}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -153,14 +112,14 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!70 &1575845093890665201
-CapsuleCollider2D:
+  m_Constraints: 7
+--- !u!61 &-5370049348190317930
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575845093890665202}
+  m_GameObject: {fileID: 67692270737459752}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -186,18 +145,16 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.000000021803675, y: -0.004104121}
-  m_Size: {x: 0.21911596, y: 0.27242607}
-  m_Direction: 0
---- !u!122 &-8443488309103390876
-Halo:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575845093890665202}
-  m_Enabled: 1
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294959360
-  m_Size: 3
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

@@ -20,13 +20,15 @@ public class CycleControll : MonoBehaviour
         CycleSeconds += Time.deltaTime;
         Cycle = Mathf.FloorToInt(CycleSeconds / CycleInSeconds);
 
-        if (Input.GetKey(KeyCode.RightBracket) && Time.timeScale < 4f)
+        if (Input.GetKey(KeyCode.RightBracket) && Time.timeScale < 6f)
         {
-            Time.timeScale = Time.timeScale + 0.2f;
+            Time.timeScale = Time.timeScale + 0.5f;
+            Debug.Log(Time.timeScale);
         }
         else if (Input.GetKey(KeyCode.LeftBracket) && Time.timeScale > 0f)
         {
-             Time.timeScale = Time.timeScale - 0.2f;
+            Time.timeScale = Time.timeScale - 0.5f;
+            Debug.Log(Time.timeScale);
         }
     }
 }

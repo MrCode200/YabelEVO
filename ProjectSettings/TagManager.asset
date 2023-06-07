@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Yabel
   - Food
+  - YabelEgg
+  - Meat
   layers:
   - Default
   - TransparentFX

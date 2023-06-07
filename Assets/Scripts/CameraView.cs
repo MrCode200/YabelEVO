@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraView : MonoBehaviour
 {
+    public Camera Camera;
+
     public float zoomSpeed = 1f;
     public float moveSpeed = 1f;
 
@@ -36,11 +38,11 @@ public class CameraView : MonoBehaviour
 
         if (Input.mouseScrollDelta.y > 0)
         {
-            Camera.main.orthographicSize += zoomSpeed;
+            Camera.orthographicSize += zoomSpeed;
         }
         else if (Input.mouseScrollDelta.y < 0)
         {
-            Camera.main.orthographicSize -= zoomSpeed;
+            Camera.orthographicSize -= zoomSpeed;
         }
     }
 }

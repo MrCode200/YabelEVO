@@ -101,4 +101,10 @@ MonoBehaviour:
   IncubationTimeInSeconds: 4
   moveSpeed: 0
   rotationSpeed: 0
+  forwardFrequenzy: 0
+  energy: 0
+  energyUsageForEgg: 0
+  energyCapEgg: 0
   foodConsumptionRate: 0
+  FieldOfViewRadius: 0
+  FieldOfViewAngle: 0
